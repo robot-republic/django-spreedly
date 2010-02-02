@@ -103,4 +103,5 @@ def spreedly_listener(request):
                         if hasattr(subscription, k):
                             setattr(subscription, k, v)
                     subscription.save()
+                return HttpResponse("OK")
     raise Http404
