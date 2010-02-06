@@ -39,7 +39,20 @@ def create_subscription(user):
     client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
     client.get_or_create_subscriber(user.id, user.username)
     return get_subscription(user)
-
+    
+def get_or_create_subscription(user):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    data = client.get_or_create_subscriber(user.id, user.username)
+    
+    subscription, created = Subscription.objects.get_or_create(
+        user=user
+    )
+    for k, v in data.items():
+        if hasattr(subscription, k):
+            setattr(subscription, k, v)
+    subscription.save()
+    return subscription
+    
 def check_trial_eligibility(plan, user):
     if plan.plan_type != 'free_trial':
         return False
