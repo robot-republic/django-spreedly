@@ -72,6 +72,21 @@ def start_free_trial(plan, user):
         return True
     else:
         return False
+        
+def complimentary_time_extension(user, duration_quantity, duration_units):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client.complimentary_time_extension(user.id, duration_quantity, duration_units)
+    return get_subscription(user)
+    
+def complimentary_subscription(user, duration_quantity, duration_units, feature_level):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client.complimentary_subscription(user.id, duration_quantity, duration_units)
+    return get_subscription(user)
+    
+def stop_auto_renew(user):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client.stop_auto_renew(user.id)
+    return get_subscription(user)
 
 def return_url(plan, user, trial=False):
     url = 'http://%s%s' % (Site.objects.get(id=settings.SITE_ID), reverse('spreedly_return', args=[user.id, plan.pk]))
