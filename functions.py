@@ -80,7 +80,12 @@ def complimentary_time_extension(user, duration_quantity, duration_units):
     
 def complimentary_subscription(user, duration_quantity, duration_units, feature_level):
     client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
-    client.complimentary_subscription(user.id, duration_quantity, duration_units)
+    client.complimentary_subscription(user.id, duration_quantity, duration_units, feature_level)
+    return get_subscription(user)
+    
+def lifetime_complimentary_subscription(user, feature_level):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client.lifetime_complimentary_subscription(user.id, feature_level)
     return get_subscription(user)
     
 def stop_auto_renew(user):
