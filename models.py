@@ -109,6 +109,10 @@ class Subscription(models.Model):
     @property
     def subscription_status(self):
         '''gets the status based on current active status and active_until'''
-        if self.active and (self.active_until > datetime.today() or self.active_until == None  or self.lifetime):
-            return True
+        if self.active:
+            if self.active_until:
+                if self.active_until > datetime.now():
+                    return True
+            elif self.lifetime:
+                return True
         return False
