@@ -47,7 +47,7 @@ class Plan(models.Model):
         ordering = ['order', 'price']
     
     def __unicode__(self):
-        return self.name
+        return '%s: $%s/%s' % (self.name, self.price, self.terms)
     
     def save(self, *args, **kwargs):
         # order the items logically
