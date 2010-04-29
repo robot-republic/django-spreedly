@@ -88,6 +88,11 @@ def lifetime_complimentary_subscription(user, feature_level):
     client.lifetime_complimentary_subscription(user.id, feature_level)
     return get_subscription(user)
     
+def add_store_credit(user, amount):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client.add_store_credit(user.id, amount)
+    return get_subscription(user)
+    
 def stop_auto_renew(user):
     client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
     client.stop_auto_renew(user.id)
