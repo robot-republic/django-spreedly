@@ -116,6 +116,8 @@ class Subscription(models.Model):
             if self.active_until:
                 if self.active_until > datetime.now():
                     return True
+                elif self.lifetime:
+                    return True
             elif self.lifetime:
-                return True
+                return True        
         return False
