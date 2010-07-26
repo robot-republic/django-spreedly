@@ -5,7 +5,7 @@ from django.db.models import Q
 
 class PlanManager(models.Manager):
     def enabled(self):
-        return self.model.objects.filter(enabled=True)
+        return self.model.objects.filter(enabled=True, force_recurring=True)
 
 
 class Plan(models.Model):
