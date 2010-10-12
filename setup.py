@@ -1,6 +1,5 @@
 from distutils.core import setup
-
-version = '0.1'
+from spreedly import __version__ as version
 
 setup(name='django-spreedly',
       version=version,
