@@ -8,5 +8,5 @@ setup(name='django-spreedly',
       author="Jon Smelquist",
       author_email="jon.smelquist@gmail.com",
       url="http://github.com/jsmelquist/django-spreedly",
-      packages = ['spreedly']
+      packages = ['spreedly','spreedly.pyspreedly']
       )
