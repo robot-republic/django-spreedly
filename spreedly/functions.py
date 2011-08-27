@@ -9,7 +9,7 @@ def sync_plans():
     '''
     Sync subscription plans with Spreedly API
     '''
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     
     for plan in client.get_plans():
         p, created = Plan.objects.get_or_create(speedly_id=plan['speedly_id'])
@@ -23,7 +23,7 @@ def sync_plans():
             p.save()
 
 def get_subscription(user):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     data = client.get_info(user.id)
     
     subscription, created = Subscription.objects.get_or_create(
@@ -36,12 +36,12 @@ def get_subscription(user):
     return subscription
     
 def create_subscription(user):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.get_or_create_subscriber(user.id, user.username)
     return get_subscription(user)
     
 def get_or_create_subscription(user):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     data = client.get_or_create_subscriber(user.id, user.username)
     
     subscription, created = Subscription.objects.get_or_create(
@@ -65,7 +65,7 @@ def check_trial_eligibility(plan, user):
 
 def start_free_trial(plan, user):
     if check_trial_eligibility(plan, user):
-        client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+        client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
         client.get_or_create_subscriber(user.id, user.username)
         client.subscribe(user.id, plan.pk, trial=True)
         get_subscription(user)
@@ -74,27 +74,27 @@ def start_free_trial(plan, user):
         return False
         
 def complimentary_time_extension(user, duration_quantity, duration_units):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.complimentary_time_extension(user.id, duration_quantity, duration_units)
     return get_subscription(user)
     
 def complimentary_subscription(user, duration_quantity, duration_units, feature_level):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.complimentary_subscription(user.id, duration_quantity, duration_units, feature_level)
     return get_subscription(user)
     
 def lifetime_complimentary_subscription(user, feature_level):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.lifetime_complimentary_subscription(user.id, feature_level)
     return get_subscription(user)
     
 def add_store_credit(user, amount):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.add_store_credit(user.id, amount)
     return get_subscription(user)
     
 def stop_auto_renew(user):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.stop_auto_renew(user.id)
     return get_subscription(user)
 
