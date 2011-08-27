@@ -39,7 +39,7 @@ Installation
 
 2) Add `spreedly` to your installed apps, and add the following to `settings.py`:
 
-	SPREEDLY_AUTH_TOKEN = 'your auth token'
+	SPREEDLY_AUTH_TOKEN_SECRET = 'your auth token'
 	SPREEDLY_SITE_NAME = 'your site name'
 	SITE_URL = 'http://www.yoursitesurl.com'
 

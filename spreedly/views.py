@@ -92,7 +92,7 @@ def spreedly_listener(request):
             subscriber_ids = request.POST['subscriber_ids'].split(',')
             
             if len(subscriber_ids):
-                client = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+                client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
                 for id in subscriber_ids:
                     # Now let's query Spreedly API for the actual changes
                     data = client.get_info(int(id))

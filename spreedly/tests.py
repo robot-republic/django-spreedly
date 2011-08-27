@@ -10,7 +10,7 @@ from functions import sync_plans
 class TestSubscription(TestCase):
     def setUp(self):
         user = User.objects.create(username='test')
-        self.sclient = Client(settings.SPREEDLY_AUTH_TOKEN, settings.SPREEDLY_SITE_NAME)
+        self.sclient = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     
     def tearDown(self):
         # Remove all subscribers

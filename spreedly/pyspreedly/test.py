@@ -3,12 +3,12 @@ import unittest
 
 from api import Client
 
-SPREEDLY_AUTH_TOKEN = '59f064f450af88df24f54281f3d78ad8ee0eb8f0'
+SPREEDLY_AUTH_TOKEN_SECRET = '59f064f450af88df24f54281f3d78ad8ee0eb8f0'
 SPREEDLY_SITE_NAME = 'shelfworthytest'
 
 class  TestCase(unittest.TestCase):
     def setUp(self):
-        self.sclient = Client(SPREEDLY_AUTH_TOKEN, SPREEDLY_SITE_NAME)
+        self.sclient = Client(SPREEDLY_AUTH_TOKEN_SECRET, SPREEDLY_SITE_NAME)
 
         # Remove all subscribers
         self.sclient.cleanup()
