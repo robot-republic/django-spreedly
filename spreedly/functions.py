@@ -73,6 +73,10 @@ def start_free_trial(plan, user):
     else:
         return False
         
+def allow_free_trial(user):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
+    client.allow_free_trial(user.id)
+        
 def complimentary_time_extension(user, duration_quantity, duration_units):
     client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
     client.complimentary_time_extension(user.id, duration_quantity, duration_units)
