@@ -192,6 +192,14 @@ class Client:
             }
             result.append(data)
         return result[0]
+        
+    def allow_free_trial(self, subscriber_id):
+        '''
+        Allows a Subscriber another Free Trial.
+        https://spreedly.com/manual/integration-reference/programatically-allowing-another-free-trial
+        '''
+        self.set_url('subscribers/%d/allow_free_trial.xml' % subscriber_id)
+        self.query('</noop>') # Required to force self.query to POST.
 
     def complimentary_subscription(self, subscriber_id, duration_quantity, duration_units, feature_level):
         '''
