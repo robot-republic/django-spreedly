@@ -5,6 +5,9 @@ from django.contrib.sites.models import Site
 from spreedly.models import Plan, Subscription
 from spreedly.pyspreedly.api import Client
 
+def subscriber_url(subscriber_id):
+    return "https://spreedly.com/%s/subscribers/%s" % (settings.SPREEDLY_SITE_NAME, subscriber_id)
+
 def sync_plans():
     '''
     Sync subscription plans with Spreedly API
