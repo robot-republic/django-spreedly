@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
 from django.db.models import Q
 
 class PlanManager(models.Manager):
@@ -76,7 +75,7 @@ class SubscriptionManager(models.Manager):
         '''
         Determine if given user has active subscription
         '''
-        return self.model.objects.filter(user=user, active=True).filter(Q(active_until__gt=datetime.today())|Q(active_until__isnull=True)).count()
+        return self.model.objects.filter(user=user, active=True).filter(Q(active_until__gt=timezone.now())|Q(active_until__isnull=True)).count()
 
 class Subscription(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -114,7 +113,7 @@ class Subscription(models.Model):
         '''gets the status based on current active status and active_until'''
         if self.active:
             if self.active_until:
-                if self.active_until > datetime.now():
+                if self.active_until > timezone.now():
                     return True
                 elif self.lifetime:
                     return True

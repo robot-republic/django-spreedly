@@ -1,10 +1,20 @@
 import httplib, urllib2
+import pytz
 from datetime import datetime
 from decimal import Decimal
 from xml.etree.ElementTree import fromstring
 from base64 import b64encode
 
+
 API_VERSION = 'v4'
+
+DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+
+def get_tz_aware_date(doc, attr):
+    """Extracts a datetime from the document and makes it TZ aware (UTC)."""
+    timestamp = datetime.strptime(doc.findtext(attr), DATE_FORMAT)
+    return pytz.timezone('utc').localize(timestamp)
+
 
 class Client:
     def __init__(self, token, site_name):
@@ -64,12 +74,8 @@ class Client:
                 'speedly_id': int(plan.findtext('id')),
                 'speedly_site_id': int(plan.findtext('site-id')) \
                     if plan.findtext('site-id') else 0,
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
             }
             result.append(data)
         return result
@@ -115,15 +121,9 @@ class Client:
                 'name': plan.findtext('subscription-plan-name'),
                 'feature_level': plan.findtext('feature-level'),
                 'store_credit': Decimal(plan.findtext('store-credit')),
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'active_until': datetime.strptime(
-                    plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
-                ) if plan.findtext('active-until') else None,
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
+                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
             }
             
             result.append(data)
@@ -180,15 +180,9 @@ class Client:
                 'name': plan.findtext('subscription-plan-name'),
                 'feature_level': plan.findtext('feature-level'),
                 'store_credit': Decimal(plan.findtext('store-credit')),
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'active_until': datetime.strptime(
-                    plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
-                ) if plan.findtext('active-until') else None,
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
+                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
             }
             result.append(data)
         return result[0]
@@ -244,15 +238,9 @@ class Client:
                 'name': plan.findtext('subscription-plan-name'),
                 'feature_level': plan.findtext('feature-level'),
                 'store_credit': Decimal(plan.findtext('store-credit')),
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'active_until': datetime.strptime(
-                    plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
-                ) if plan.findtext('active-until') else None,
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
+                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
             }
 
             result.append(data)
@@ -298,15 +286,9 @@ class Client:
                 'name': plan.findtext('subscription-plan-name'),
                 'feature_level': plan.findtext('feature-level'),
                 'store_credit': Decimal(plan.findtext('store-credit')),
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'active_until': datetime.strptime(
-                    plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
-                ) if plan.findtext('active-until') else None,
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
+                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
             }
 
             result.append(data)
@@ -353,15 +335,9 @@ class Client:
                 'name': plan.findtext('subscription-plan-name'),
                 'feature_level': plan.findtext('feature-level'),
                 'store_credit': Decimal(plan.findtext('store-credit')),
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'active_until': datetime.strptime(
-                    plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
-                ) if plan.findtext('active-until') else None,
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
+                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
             }
 
             result.append(data)
@@ -431,15 +407,9 @@ class Client:
                 'name': plan.findtext('subscription-plan-name'),
                 'feature_level': plan.findtext('feature-level'),
                 'store_credit': Decimal(plan.findtext('store-credit')),
-                'created_at': datetime.strptime(
-                    plan.findtext('created-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'date_changed': datetime.strptime(
-                    plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
-                ),
-                'active_until': datetime.strptime(
-                    plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
-                ) if plan.findtext('active-until') else None,
+                'created_at': get_tz_aware_date(plan, 'created-at'),
+                'date_changed': get_tz_aware_date(plan, 'updated-at'),
+                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
             }
             result.append(data)
         return result[0]
