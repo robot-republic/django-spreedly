@@ -123,7 +123,7 @@ class Client:
                 'store_credit': Decimal(plan.findtext('store-credit')),
                 'created_at': get_tz_aware_date(plan, 'created-at'),
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
-                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
+                'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
             
             result.append(data)
@@ -182,7 +182,7 @@ class Client:
                 'store_credit': Decimal(plan.findtext('store-credit')),
                 'created_at': get_tz_aware_date(plan, 'created-at'),
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
-                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
+                'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
             result.append(data)
         return result[0]
@@ -240,7 +240,7 @@ class Client:
                 'store_credit': Decimal(plan.findtext('store-credit')),
                 'created_at': get_tz_aware_date(plan, 'created-at'),
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
-                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
+                'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
 
             result.append(data)
@@ -288,7 +288,7 @@ class Client:
                 'store_credit': Decimal(plan.findtext('store-credit')),
                 'created_at': get_tz_aware_date(plan, 'created-at'),
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
-                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
+                'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
 
             result.append(data)
@@ -337,7 +337,7 @@ class Client:
                 'store_credit': Decimal(plan.findtext('store-credit')),
                 'created_at': get_tz_aware_date(plan, 'created-at'),
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
-                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
+                'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
 
             result.append(data)
@@ -409,7 +409,7 @@ class Client:
                 'store_credit': Decimal(plan.findtext('store-credit')),
                 'created_at': get_tz_aware_date(plan, 'created-at'),
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
-                'active_until': get_tz_aware_date(plan, 'active_until') if plan.findtext('active-until') else None,
+                'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
             result.append(data)
         return result[0]
