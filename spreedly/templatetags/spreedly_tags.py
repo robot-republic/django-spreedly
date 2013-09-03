@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.simple_tag
 def existing_plan_url(user, return_url):
-    return 'https://spreedly.com/%(site_name)s/subscriber_accounts/%(user_token)s/?return_url=%(return_url)s' % {
+    return 'https://subs.pinpayments.com/%(site_name)s/subscriber_accounts/%(user_token)s/?return_url=%(return_url)s' % {
         'site_name': settings.SPREEDLY_SITE_NAME,
         'user_token': user.subscription.token,
         'return_url': return_url

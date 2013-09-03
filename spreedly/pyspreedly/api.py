@@ -19,37 +19,37 @@ def get_tz_aware_date(doc, attr):
 class Client:
     def __init__(self, token, site_name):
         self.auth = b64encode('%s:x' % token)
-        self.base_host = 'spreedly.com'
+        self.base_host = 'subs.pinpayments.com'
         self.base_path = '/api/%s/%s' % (API_VERSION, site_name)
         self.base_url = 'https://%s%s' % (self.base_host, self.base_path)
         self.url = None
-    
+
     def get_response(self):
         return self.response
-    
+
     def get_url(self):
         return self.url
-    
+
     def set_url(self, url):
         self.url = '%s/%s' % (self.base_url, url)
-    
+
     def query(self, data=None):
         req = urllib2.Request(url=self.get_url())
         req.add_header('User-agent', 'python-spreedly 1.0')
         req.add_header('Authorization', 'Basic %s' % self.auth)
-        
+
         # Convert to POST if we got some data
         if data:
             req.add_header('Content-Type', 'application/xml')
             req.add_data(data)
-        
+
         f = urllib2.urlopen(req)
         self.response = f.read()
-    
+
     def get_plans(self):
         self.set_url('subscription_plans.xml')
         self.query()
-        
+
         # Parse
         result = []
         tree = fromstring(self.get_response())
@@ -79,7 +79,7 @@ class Client:
             }
             result.append(data)
         return result
-    
+
     def create_subscriber(self, customer_id, screen_name):
         '''
         Creates a subscription
@@ -90,10 +90,10 @@ class Client:
             <screen-name>%s</screen-name>
         </subscriber>
         ''' % (customer_id, screen_name)
-        
+
         self.set_url('subscribers.xml')
         self.query(data)
-        
+
         # Parse
         result = []
         tree = fromstring(self.get_response())
@@ -125,10 +125,10 @@ class Client:
                 'date_changed': get_tz_aware_date(plan, 'updated-at'),
                 'active_until': get_tz_aware_date(plan, 'active-until') if plan.findtext('active-until') else None,
             }
-            
+
             result.append(data)
         return result[0]
-    
+
     def delete_subscriber(self, id):
         if 'test' in self.base_path:
             headers = {'Authorization': 'Basic %s' % self.auth}
@@ -141,18 +141,18 @@ class Client:
             response = conn.getresponse()
             return response.status
         return
-    
+
     def subscribe(self, subscriber_id, plan_id, trial=False):
         '''
         Subscribe a user to some plan
         '''
         data = '<subscription_plan><id>%d</id></subscription_plan>' % plan_id
-        
+
         if trial:
             self.set_url('subscribers/%d/subscribe_to_free_trial.xml' % subscriber_id)
-        
+
         self.query(data)
-        
+
         # Parse
         result = []
         tree = fromstring(self.get_response())
@@ -186,7 +186,7 @@ class Client:
             }
             result.append(data)
         return result[0]
-        
+
     def allow_free_trial(self, subscriber_id):
         '''
         Allows a Subscriber another Free Trial.
@@ -207,7 +207,7 @@ class Client:
             <feature_level>%s</feature_level>
         </complimentary_subscription>
         ''' % (duration_quantity, duration_units, feature_level)
-    
+
         self.set_url('subscribers/%d/complimentary_subscriptions.xml' % subscriber_id)
         self.query(data)
 
@@ -245,7 +245,7 @@ class Client:
 
             result.append(data)
         return result[0]
-        
+
     def lifetime_complimentary_subscription(self, subscriber_id, feature_level):
         '''
         Creates a lifetime complimentary subscription for the specified feature level
@@ -304,7 +304,7 @@ class Client:
             <duration_units>%s</duration_units>
         </complimentary_time_extension>
         ''' % (duration_quantity, duration_units)
-        
+
         self.set_url('subscribers/%d/complimentary_time_extensions.xml' % subscriber_id)
         self.query(data)
 
@@ -357,9 +357,9 @@ class Client:
         self.set_url('subscribers/%d/credits.xml' % subscriber_id)
         self.query(data)
 
-        return self.get_response()  
-        
-        
+        return self.get_response()
+
+
     def cleanup(self):
         '''
         Removes ALL subscribers. NEVER USE IN PRODUCTION!
@@ -375,11 +375,11 @@ class Client:
             response = conn.getresponse()
             return response.status
         return
-    
+
     def get_info(self, subscriber_id):
         self.set_url('subscribers/%d.xml' % subscriber_id)
         self.query('')
-    
+
         # Parse
         result = []
         tree = fromstring(self.get_response())
@@ -413,19 +413,19 @@ class Client:
             }
             result.append(data)
         return result[0]
-        
+
     def stop_auto_renew(self, subscriber_id):
         self.set_url('subscribers/%d/stop_auto_renew.xml' % subscriber_id)
-        
+
         data = '''
         <subscriber>
             <customer-id>%d</customer-id>
         </subscriber>
         ''' % (subscriber_id)
         self.query(data)
-        
+
         return self.get_response()
-    
+
     def get_or_create_subscriber(self, subscriber_id, screen_name):
         try:
             return self.get_info(subscriber_id)

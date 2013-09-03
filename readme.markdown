@@ -1,7 +1,7 @@
 Info
 ====
 
-This app can be used to add support for the [spreedly](https://spreedly.com/) subscription service to your django app.
+This app can be used to add support for the [Pin Payments](https://subs.pinpayments.com/) (formerly Spreedly) subscription service to your django app.
 
 **Note** this app is still in development, if you find issues or bugs, please submit them here:
 
@@ -21,7 +21,7 @@ Requirements
 
 This code is currently only tested on django trunk, but should work without issue on 1.1
 
-* python 2.5 
+* python 2.5
 * [pytz](http://pytz.sourceforge.net/)
 * [pyspreedly](http://github.com/chrisdrackett/python-spreedly) <- included as a submodule of this project
 * LOGIN_URL variable in your settings file
@@ -61,7 +61,7 @@ Installation
 	# if you want to restrict access to your entire site based to only users with an active subscription
 	# this defaults to False
 	SPREEDLY_USERS_ONLY = True
-	
+
 	# URL paths that a user without a subscription can vist without being redirected to the subscription list:
 	# these can be single pages ('/some/page/') of full directories ('/directory')
 	SPREEDLY_ALLOWED_PATHS = ['/login', '/logout']
@@ -123,6 +123,6 @@ if you changed SPREEDLY_URL, you'll need to substitute that for subscriptions.
 If you want to add a fallback, you can also add the following to your login view after a user is logged in (but before you check if they are active):
 
 	from spreedly.functions import get_subscription
-	
+
 	if not user.is_active:
 		get_subscription(user)
