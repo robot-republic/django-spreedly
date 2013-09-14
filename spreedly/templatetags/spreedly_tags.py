@@ -12,6 +12,14 @@ def existing_plan_url(user, return_url):
         'user_token': user.subscription.token,
         'return_url': return_url
     }
+    
+@register.simple_tag
+def change_payment_url(user, return_url):
+    return 'https://subs.pinpayments.com/%(site_name)s/subscriber_accounts/%(user_token)s/change_payment?return_url=%(return_url)s' % {
+        'site_name': settings.SPREEDLY_SITE_NAME,
+        'user_token': user.subscription.token,
+        'return_url': return_url
+    }
 
 @register.simple_tag
 def new_plan_url(plan, user, return_url):
