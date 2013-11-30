@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
 
 from spreedly.models import Plan, Subscription
-from spreedly.pyspreedly.api import Client
+from spreedly.client import Client
 
 def subscriber_url(subscriber_id):
     return "https://subs.pinpayments.com/%s/subscribers/%s" % (settings.SPREEDLY_SITE_NAME, subscriber_id)

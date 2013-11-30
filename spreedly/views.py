@@ -2,7 +2,7 @@ from django.http import Http404, HttpResponse
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.mail import mail_admins
-from spreedly.pyspreedly.api import Client
+from spreedly.client import Client
 from spreedly.functions import subscriber_url
 from spreedly.models import Subscription
 
