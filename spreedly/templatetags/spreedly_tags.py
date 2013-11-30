@@ -1,9 +1,11 @@
 from django.conf import settings
 from django import template
 
-from spreedly.functions import subscription_url, return_url
+from spreedly.functions import subscription_url
+
 
 register = template.Library()
+
 
 @register.simple_tag
 def existing_plan_url(user, return_url):
@@ -12,7 +14,8 @@ def existing_plan_url(user, return_url):
         'user_token': user.subscription.token,
         'return_url': return_url
     }
-    
+
+
 @register.simple_tag
 def change_payment_url(user, return_url):
     return 'https://subs.pinpayments.com/%(site_name)s/subscriber_accounts/%(user_token)s/change_payment?return_url=%(return_url)s' % {
@@ -20,6 +23,7 @@ def change_payment_url(user, return_url):
         'user_token': user.subscription.token,
         'return_url': return_url
     }
+
 
 @register.simple_tag
 def new_plan_url(plan, user, return_url):
